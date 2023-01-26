@@ -36,3 +36,11 @@ firstH1Element.parentElement.removeChild(firstH1Element); // for older browser
 
 // MOVE ELEMENT
 firstParagraph.parentElement.append(firstParagraph);
+
+//innerHTML
+//difference textContent
+console.log(firstParagraph.innerHTML);
+// console.log(firstParagraph.textContent);
+firstParagraph.innerHTML =
+  "Hi This is <strong>important!</strong>" + "another value";
+// firstParagraph.textContent = "Hi This is <strong>important!</strong>";
