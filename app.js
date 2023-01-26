@@ -13,3 +13,18 @@ anchorElement = document.querySelector("p a"); // CSS Selector -> p a { color: r
 anchorElement.href = "https://naver.com";
 // Match All
 // document.querySelectorAll();
+
+// ADD AN ELEMENT
+// 1. Create the new element
+
+let newAnchorElement = document.createElement("a"); // Create anchor element
+newAnchorElement.href = "https://google.com";
+newAnchorElement.textContent = "This leads to google!";
+
+// 2. Get access to the parent element that should hold the new element
+
+let firstParagraph = document.querySelector("p");
+
+// 3. Insert the new element into the parent element content
+
+firstParagraph.append(newAnchorElement);
