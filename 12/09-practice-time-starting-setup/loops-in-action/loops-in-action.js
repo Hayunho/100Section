@@ -35,7 +35,7 @@ function highlightLinks() {
 
 highlightLinksbuttonElement.addEventListener("click", highlightLinks);
 
-//Display user data
+//Third Example: Display user data
 
 const dummyUserData = {
   firstName: "Max",
@@ -60,3 +60,50 @@ function displayUserData() {
 }
 
 displayUserDataButtonElement.addEventListener("click", displayUserData);
+
+// Fourth Example: Statistics / Roll the Dice
+
+const rollDiceButtonElement = document.querySelector("#statistics button");
+
+function rollDice() {
+  //return Math.random(); 0<= x < 1
+  return Math.floor(Math.random() * 6) + 1;
+}
+
+function deriveNumberOfDiceRolls() {
+  const targetNumberInputElement =
+    document.getElementById("user-target-number");
+  const diceRollsListElement = document.getElementById("dice-rolls");
+
+  const enteredNumber = targetNumberInputElement.value;
+  diceRollsListElement.innerHTML = "";
+
+  let hasRolledTargetNumber = false;
+  let numberOfRolls = 0;
+
+  while (!hasRolledTargetNumber) {
+    const rolledNumber = rollDice();
+
+    // numberOfRolls++;
+    // if (rolledNumber == enteredNumber) {
+    //   hasRolledTargetNumber = true;
+    // }
+
+    numberOfRolls++;
+    const newRollListElement = document.createElement("li");
+    const outputText = "Roll " + numberOfRolls + ": " + rolledNumber;
+    newRollListElement.textContent = outputText;
+    diceRollsListElement.append(newRollListElement);
+    hasRolledTargetNumber = rolledNumber == enteredNumber;
+  }
+
+  const outputTotalRollsElement = document.getElementById("output-total-rolls");
+  const outputTargetNumberElement = document.getElementById(
+    "output-target-number"
+  );
+
+  outputTargetNumberElement.textContent = enteredNumber;
+  outputTotalRollsElement.textContent = numberOfRolls;
+}
+
+rollDiceButtonElement.addEventListener("click", deriveNumberOfDiceRolls);
