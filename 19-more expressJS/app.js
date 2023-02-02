@@ -33,6 +33,12 @@ app.get("/restaurants", function (req, res) {
   });
 });
 
+app.get("/restaurants/:rid", function (req, res) {
+  // /restaurant/r1        :rid --> req.params.rid          :id --> req.params.id
+  const restaurantId = req.params.rid;
+  res.render("restaurant-detail", { rid: restaurantId });
+});
+
 app.get("/recommend", function (req, res) {
   // const htmlFilePath = path.join(__dirname, "views", "recommend.html");
   // res.sendFile(htmlFilePath);
