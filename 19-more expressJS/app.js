@@ -55,7 +55,7 @@ app.get("/confirm", function (req, res) {
   // const htmlFilePath = path.join(__dirname, "views", "confirm.html");
   // res.sendFile(htmlFilePath);
 
-  res.render("cofirm");
+  res.render("confirm");
 });
 
 app.get("/about", function (req, res) {
