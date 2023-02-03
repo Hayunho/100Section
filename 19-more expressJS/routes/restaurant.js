@@ -8,12 +8,34 @@ const router = express.Router();
 router.get("/restaurants", function (req, res) {
   // const htmlFilePath = path.join(__dirname, "views", "restaurants.html");
   // res.sendFile(htmlFilePath);
+  let order = req.query.order;
+  let nextOrder = "desc";
+
+  if (order !== "asc" && order !== "desc") {
+    order = "asc";
+  }
+
+  if (order === "desc") {
+    nextOrder = "asc";
+  }
 
   const storedRestaurants = resData.getStoredRestaurants(); // util/restaurant-data.js
+
+  // 정렬
+  storedRestaurants.sort(function (restA, restB) {
+    if (
+      (order === "asc" && restA.name > restB.name) ||
+      (order === "desc" && restB.name > restA.name)
+    ) {
+      return 1;
+    }
+    return -1;
+  });
 
   res.render("restaurants", {
     numberOfRestaurants: storedRestaurants.length,
     restaurants: storedRestaurants,
+    nextOrder: nextOrder,
   });
 });
 
