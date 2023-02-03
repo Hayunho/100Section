@@ -48,7 +48,7 @@ app.get("/restaurants/:rid", function (req, res) {
     }
   }
 
-  res.render("404"); //restaurant/rid 가 없는 경우 404 render
+  res.render("404"); //잘못된 id 경우: 404 page render
 });
 
 app.get("/recommend", function (req, res) {
@@ -89,6 +89,10 @@ app.get("/about", function (req, res) {
 
 app.use(function (req, res) {
   res.render("404");
-}); // 아예 주소자체가 틀린 경우 404 page
+}); // 아예 주소자체가 틀린 경우: 404 page
+
+app.use(function (error, req, res, next) {
+  res.render("500");
+}); // 서버 안의 content, data가 오류가 날 경우: 500 page
 
 app.listen(3000);
