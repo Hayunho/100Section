@@ -48,7 +48,7 @@ app.get("/restaurants/:rid", function (req, res) {
     }
   }
 
-  res.render("404");
+  res.render("404"); //restaurant/rid 가 없는 경우 404 render
 });
 
 app.get("/recommend", function (req, res) {
@@ -71,7 +71,7 @@ app.post("/recommend", function (req, res) {
   fs.writeFileSync(filePath, JSON.stringify(storedRestaurants));
 
   res.redirect("/confirm");
-});
+}); // recommend페이지에서 submit시 데이터 저장
 
 app.get("/confirm", function (req, res) {
   // const htmlFilePath = path.join(__dirname, "views", "confirm.html");
@@ -86,5 +86,9 @@ app.get("/about", function (req, res) {
 
   res.render("about");
 });
+
+app.use(function (req, res) {
+  res.render("404");
+}); // 아예 주소자체가 틀린 경우 404 page
 
 app.listen(3000);
