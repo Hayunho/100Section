@@ -47,6 +47,8 @@ app.get("/restaurants/:rid", function (req, res) {
       return res.render("restaurant-detail", { restaurant: restaurant });
     }
   }
+
+  res.render("404");
 });
 
 app.get("/recommend", function (req, res) {
