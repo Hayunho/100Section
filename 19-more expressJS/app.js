@@ -1,8 +1,13 @@
+// fs, path 가져오기
 const fs = require("fs");
 const path = require("path");
 
+// third party express, uuid 가져오기
 const express = require("express");
 const uuid = require("uuid");
+
+// user-define 가져옥;
+const resData = require("./util/restaurant-data");
 
 const app = express();
 
@@ -23,10 +28,7 @@ app.get("/restaurants", function (req, res) {
   // const htmlFilePath = path.join(__dirname, "views", "restaurants.html");
   // res.sendFile(htmlFilePath);
 
-  const filePath = path.join(__dirname, "data", "restaurants.json");
-
-  const fileData = fs.readFileSync(filePath);
-  const storedRestaurants = JSON.parse(fileData);
+  const storedRestaurants = resData.getStoredRestaurants(); // util/restaurant-data.js
 
   res.render("restaurants", {
     numberOfRestaurants: storedRestaurants.length,
@@ -37,10 +39,7 @@ app.get("/restaurants", function (req, res) {
 app.get("/restaurants/:rid", function (req, res) {
   // /restaurant/r1        :rid --> req.params.rid          :id --> req.params.id
   const restaurantId = req.params.rid;
-  const filePath = path.join(__dirname, "data", "restaurants.json");
-
-  const fileData = fs.readFileSync(filePath);
-  const storedRestaurants = JSON.parse(fileData);
+  const storedRestaurants = resData.getStoredRestaurants(); // util/restaurant-data.js
 
   for (const restaurant of storedRestaurants) {
     if (restaurant.id === restaurantId) {
@@ -61,11 +60,11 @@ app.get("/recommend", function (req, res) {
 app.post("/recommend", function (req, res) {
   const restaurant = req.body;
   restaurant.id = uuid.v4();
-  const restaurants = getStoredRestaurants();
+  const restaurants = resData.getStoredRestaurants(); // util/restaurant-data.js
 
   restaurants.push(restaurant);
 
-  storeRestaurants(restaurants);
+  resData.storeRestaurants(restaurants); // util/restaurant-data.js
 
   res.redirect("/confirm");
 }); // recommend페이지에서 submit시 데이터 저장
