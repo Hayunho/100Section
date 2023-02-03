@@ -22,5 +22,6 @@ function getAdultYears(p) {
 }
 
 // console.log(getAdultYears(person)); // reference object address
-console.log(getAdultYears({ age: person.age }));
+// console.log(getAdultYears({ age: person.age }));
+console.log(getAdultYearas({ ...person }));
 console.log(person);
