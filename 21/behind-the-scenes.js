@@ -24,5 +24,5 @@ function getAdultYears(p) {
 // console.log(getAdultYears(person)); // reference object address
 // console.log(getAdultYears({ age: person.age }));
 console.log(getAdultYears({ ...person }));
-console.log(getAdultYears(person));
+// console.log(getAdultYears(person));  // 아래 값도 같이 변형됨
 console.log(person);
