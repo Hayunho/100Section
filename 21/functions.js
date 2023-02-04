@@ -7,6 +7,7 @@ greetUser("Hi", "Max");
 greetUser("Hello");
 
 function sumUp(...numbers) {
+  // REST parameter
   let result = 0;
 
   for (const number of numbers) {
@@ -18,6 +19,6 @@ function sumUp(...numbers) {
 
 const inputNumbers = [1, 5, 10, 11, 20, 31];
 
-console.log(sumUp(...inputNumbers));
+console.log(sumUp(...inputNumbers)); // seperate parameter
 
 console.log(sumUp);
