@@ -6,6 +6,10 @@ function readFile() {
   //1. fileData = fs.readFileSync("data.txt");
 
   //2. fileData = fs.readFile("data.txt", function (error, fileData) {
+  // error 처리
+  //   if (error) {
+  //     ...
+  //   }
   //   console.log("File parsing done!");
   //   console.log(fileData.toString());
   // });
@@ -15,10 +19,15 @@ function readFile() {
   //1. console.log(fileData);
   //1. console.log(fileData.toString());
 
-  fs.readFile("data.txt").then(function (fileData) {
-    console.log("File parsing done!");
-    console.log(fileData.toString());
-  }); // promises
+  fs.readFile("data.txt")
+    .then(function (fileData) {
+      console.log("File parsing done!");
+      console.log(fileData.toString());
+    })
+    .then(function () {}) // asnyc promises
+    .catch(function (error) {
+      console.log(error);
+    }); //error처리
 
   console.log("Hi there!");
 }
