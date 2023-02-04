@@ -34,3 +34,22 @@ console.log(cooker);
 
 developer.describe();
 cooker.describe();
+
+const input = ["Max", "Schwarzmuller"];
+
+const firstName = input[0];
+const lastName = input[1];
+
+const [first, last] = input; // array-destructure
+
+console.log(first);
+console.log(last);
+
+const job = { title: "Developer", location: "New York" };
+const { title, location } = job; // class-destructure
+
+console.log(title);
+
+const { title: jTitle } = job;
+
+console.log(jTitle);
