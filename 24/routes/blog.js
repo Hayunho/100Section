@@ -4,10 +4,12 @@ const db = require("../data/database");
 
 const router = express.Router();
 
+// main-page
 router.get("/", function (req, res) {
   res.redirect("/posts");
 });
 
+// post-list page
 router.get("/posts", async function (req, res) {
   const query = `
   SELECT posts.*, authors.name AS author_name FROM posts 
@@ -16,6 +18,7 @@ router.get("/posts", async function (req, res) {
   res.render("posts-list", { posts: posts });
 });
 
+// post-write page
 router.get("/new-post", async function (req, res) {
   const [authors] = await db.query("SELECT * FROM authors"); // db mysql authors TABLE에서 첫번째 배열 가져오기
   res.render("create-post", {
@@ -23,6 +26,7 @@ router.get("/new-post", async function (req, res) {
   });
 });
 
+// upload post
 router.post("/posts", async function (req, res) {
   const data = [
     req.body.title,
@@ -41,6 +45,7 @@ router.post("/posts", async function (req, res) {
   res.redirect("/posts");
 });
 
+// post-detail page
 router.get("/posts/:pid", async function (req, res) {
   const query = `
     SELECT posts.*, authors.name AS author_name, authors.email AS author_email FROM posts 
@@ -66,6 +71,20 @@ router.get("/posts/:pid", async function (req, res) {
   };
 
   res.render("post-detail", { post: postData });
+});
+
+// edit post page
+router.get("/posts/:pid/edit", async function (req, res) {
+  const query = `
+    SELECT * FROM posts WHERE posts.id = ?
+  `;
+  const [posts] = await db.query(query, [req.params.pid]);
+
+  if (!posts || posts.length === 0) {
+    return res.status(404).render("404");
+  }
+
+  res.render("update-post", { post: posts[0] });
 });
 
 module.exports = router;
