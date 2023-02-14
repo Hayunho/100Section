@@ -23,16 +23,25 @@ function createCommentsList(comments) {
 
 async function fetchCommentsForPost() {
   const postId = loadCommentsBtnElement.dataset.postid;
-  const response = await fetch(`/posts/${postId}/comments`); // GET
-  const responseData = await response.json(); // JavaScript json(encoding -> decoding: to javascript data)
+  try {
+    const response = await fetch(`/posts/${postId}/comments`); // GET
 
-  if (responseData && responseData.length > 0) {
-    const commentsListElement = createCommentsList(responseData);
-    commentsSectionElement.innerHTML = "";
-    commentsSectionElement.appendChild(commentsListElement);
-  } else {
-    commentsSectionElement.firstElementChild.textContent =
-      "We could not find any comments. Maybe add one?";
+    if (!response.ok) {
+      alert("Fetching comments failed!");
+      return;
+    }
+    const responseData = await response.json(); // JavaScript json(encoding -> decoding: to javascript data)
+
+    if (responseData && responseData.length > 0) {
+      const commentsListElement = createCommentsList(responseData);
+      commentsSectionElement.innerHTML = "";
+      commentsSectionElement.appendChild(commentsListElement);
+    } else {
+      commentsSectionElement.firstElementChild.textContent =
+        "We could not find any comments. Maybe add one?";
+    }
+  } catch (error) {
+    alert("Getting comments failed!");
   }
 }
 
@@ -45,15 +54,23 @@ async function saveComment(event) {
 
   const comment = { title: enteredTitle, text: enteredText }; // NOT JSON!!! THIS IS orignal Javascript value!
 
-  const reponse = await fetch(`/posts/${postId}/comments`, {
-    method: "POST",
-    body: JSON.stringify(comment), //stringify(): original JavaScript value -> JSON , parse(): JSON -> original JavaScript value
-    headers: {
-      "Content-Type": "application/json",
-    },
-  }); // POST
+  try {
+    const response = await fetch(`/posts/${postId}/comments`, {
+      method: "POST",
+      body: JSON.stringify(comment), //stringify(): original JavaScript value -> JSON , parse(): JSON -> original JavaScript value
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }); // POST
 
-  fetchCommentsForPost();
+    if (response.ok) {
+      fetchCommentsForPost();
+    } else {
+      alert("Could not send comment!");
+    }
+  } catch (error) {
+    alert("Could not send request - maybe try again later!");
+  }
 }
 
 loadCommentsBtnElement.addEventListener("click", fetchCommentsForPost);
