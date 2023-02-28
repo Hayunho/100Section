@@ -1,10 +1,5 @@
 function postIsValid(title, content) {
-  return (
-    enteredTitle &&
-    enteredContent &&
-    enteredTitle.trim() !== "" &&
-    enteredContent.trim() !== ""
-  );
+  return title && content && title.trim() !== "" && content.trim() !== "";
 }
 
 module.exports = {
