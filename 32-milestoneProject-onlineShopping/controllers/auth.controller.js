@@ -18,7 +18,7 @@ function getSignup(req, res) {
     };
   }
 
-  res.render("customer/auth/signup");
+  res.render("customer/auth/signup", { inputData: sessionData });
 }
 
 async function signup(req, res, next) {
@@ -33,7 +33,7 @@ async function signup(req, res, next) {
   };
 
   if (
-    !validation.userDetailsAreValid(
+    !validation.userDetailAreValid(
       req.body.email,
       req.body.password,
       req.body.fullname,
@@ -47,7 +47,7 @@ async function signup(req, res, next) {
       req,
       {
         errorMessage:
-          "Please check your input. Password must be at least 6 characters long, postal code must be 6 characters long",
+          "Please check your input. Password must be at least 6 characters long, postal code must be 5 characters long",
         ...enteredData,
       },
       function () {
@@ -93,7 +93,16 @@ async function signup(req, res, next) {
 }
 
 function getLogin(req, res) {
-  res.render("customer/auth/login");
+  let sessionData = sessionFlash.getSessionData(req);
+
+  if (!sessionData) {
+    sessionData = {
+      email: "",
+      password: "",
+    };
+  }
+
+  res.render("customer/auth/login", { inputData: sessionData });
 }
 
 async function login(req, res) {
